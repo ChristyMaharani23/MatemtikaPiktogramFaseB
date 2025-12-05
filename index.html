@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interactive Worksheet - Piktogram Matematika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      padding: 30px 24px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dekorasi warna ceria */
+    .badge {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      opacity: 0.18;
+      z-index: 0;
+    }
+    .badge.badge-1 {
+      background: #ff6392;
+      top: -40px;
+      left: -40px;
+    }
+    .badge.badge-2 {
+      background: #ffd166;
+      bottom: -50px;
+      right: -40px;
+    }
+
+    .header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .header h1 span {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ffcf56;
+      margin: 0 2px;
+    }
+
+    .header h2 {
+      font-size: 1.2rem;
+      color: #2663ff;
+      margin-top: 6px;
+      font-weight: 700;
+    }
+
+    .header h3 {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* PAGE 1: LOGIN */
+    #page1 .content {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-card {
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      border-radius: 18px;
+      padding: 18px 18px 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .form-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0b2b5c;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-card h4 span {
+      font-size: 1.1rem;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: #0b2b5c;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.9);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    }
+
+    input::placeholder {
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 4px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #ff7eb3, #ff758c);
+      color: #fff;
+      box-shadow: 0 6px 15px rgba(255,117,140,0.55);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 9px 18px rgba(255,117,140,0.7);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(255,117,140,0.55);
+    }
+
+    .alert {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      display: none;
+    }
+    .alert.error {
+      color: #b00020;
+    }
+    .alert.success {
+      color: #0a7c2f;
+    }
+
+    /* PAGE 2: WORKSHEET */
+    #page2 {
+      display: none; /* disembunyikan dulu */
+    }
+
+    #page2 .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
+      gap: 20px;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 800px) {
+      #page2 .content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .welcome-card {
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      border-radius: 18px;
+      padding: 18px 18px 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    }
+
+    .welcome-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #5b1a00;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .welcome-text {
+      font-size: 0.9rem;
+      color: #5b1a00;
+      margin-bottom: 10px;
+    }
+
+    .student-name {
+      font-weight: 700;
+    }
+
+    .iframe-wrapper {
+      background: #f6f8ff;
+      border-radius: 18px;
+      padding: 14px 14px 18px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .iframe-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #333;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .iframe-title span.icon {
+      font-size: 1.2rem;
+    }
+
+    .iframe-note {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .embed-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: 56.25%;
+      padding-bottom: 0;
+      box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+      margin-top: 0.6em;
+      margin-bottom: 0.6em;
+      overflow: hidden;
+      border-radius: 8px;
+      will-change: transform;
+    }
+
+    .embed-container iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .iframe-link {
+      font-size: 0.85rem;
+    }
+
+    .iframe-link a {
+      color: #2663ff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .iframe-link a:hover {
+      text-decoration: underline;
+    }
+
+    .back-btn {
+      margin-top: 10px;
+      display: inline-block;
+      font-size: 0.8rem;
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 5px 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="badge badge-1"></div>
+      <div class="badge badge-2"></div>
+
+      <!-- HEADER (dipakai di kedua page) -->
+      <div class="header">
+        <h1>
+          <span>INTERACTIVE</span>
+          <span>WORKSHEET</span>
+          <span>PIKTOGRAM</span>
+          <span>MATEMATIKA</span>
+        </h1>
+        <h2>Fase B Sekolah Dasar</h2>
+        <h3>By Ms. Isty</h3>
+        <p class="subtitle">
+          Selamat datang di lembar kerja interaktif piktogram matematika yang seru dan penuh warna!
+        </p>
+      </div>
+
+      <!-- PAGE 1: LOGIN -->
+      <section id="page1">
+        <div class="content">
+          <div class="form-card">
+            <h4><span>📚</span> Masuk ke Worksheet</h4>
+
+            <div class="form-group">
+              <label for="nama">Nama Lengkap</label>
+              <input type="text" id="nama" placeholder="Tulis namamu di sini" />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Sandi</label>
+              <input type="password" id="password" placeholder="Masukkan sandi..." />
+            </div>
+
+            <button class="btn" id="btnMasuk">Masuk</button>
+
+            <div id="alertBox" class="alert"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 2: WORKSHEET + AUDIO -->
+      <section id="page2">
+        <div class="content">
+          <!-- Kartu sambutan -->
+          <div class="welcome-card">
+            <div class="welcome-title">
+              <span>🎉</span> Selamat Datang di Worksheet!
+            </div>
+            <p class="welcome-text">
+              Halo, <span id="studentName" class="student-name"></span>!  
+              Sekarang kamu berada di halaman worksheet piktogram matematika.  
+              Bacalah piktogramnya dengan teliti, lalu jawab pertanyaannya dengan semangat!
+            </p>
+            <button class="back-btn" id="backBtn">← Kembali ke Halaman Awal</button>
+          </div>
+
+          <!-- Bagian Canva -->
+          <div class="iframe-wrapper">
+            <div class="iframe-title">
+              <span class="icon">🧮</span>
+              <span>Piktogram Matematika – Lembar Kerja Interaktif</span>
+            </div>
+            <p class="iframe-note">
+              Gunakan lembar kerja di bawah ini. Anak-anak dapat mengamati piktogram,
+              lalu menjawab pertanyaan yang tersedia.
+            </p>
+
+            <div class="embed-container">
+              <iframe loading="lazy"
+                src="https://www.canva.com/design/DAG6ptyTYJs/R1BvtktqUmRd5wYWlldEZA/view?embed"
+                allowfullscreen="allowfullscreen" allow="fullscreen">
+              </iframe>
+            </div>
+
+            <p class="iframe-link">
+              Jika tampilan tidak muncul atau ingin membuka di tab baru, klik:
+              <a href="https://www.canva.com/design/DAG6ptyTYJs/R1BvtktqUmRd5wYWlldEZA/view?utm_content=DAG6ptyTYJs&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                 target="_blank" rel="noopener">
+                PICTOGRAM MATH (by wowiling christyawati)
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUDIO (diputar saat masuk Page 2) -->
+      <!-- GANTI src DENGAN FILE AUDIO YANG IBU INGINKAN -->
+      <audio id="bgAudio" preload="auto">
+        <!-- contoh: <source src="audio/bgm.mp3" type="audio/mpeg" /> -->
+        <!-- sementara kosong, agar tidak error -->
+      </audio>
+    </div>
+  </div>
+
+  <script>
+    const btnMasuk = document.getElementById("btnMasuk");
+    const passwordInput = document.getElementById("password");
+    const namaInput = document.getElementById("nama");
+    const alertBox = document.getElementById("alertBox");
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+    const studentNameSpan = document.getElementById("studentName");
+    const backBtn = document.getElementById("backBtn");
+    const bgAudio = document.getElementById("bgAudio");
+
+    const SANDI_BENAR = "isty123";
+
+    function masukWorksheet() {
+      const nama = namaInput.value.trim();
+      const sandi = passwordInput.value;
+
+      alertBox.style.display = "none";
+
+      if (!nama) {
+        alertBox.textContent = "Silakan isi nama terlebih dahulu.";
+        alertBox.className = "alert error";
+        alertBox.style.display = "block";
+        return;
+      }
+
+      if (sandi !== SANDI_BENAR) {
+        alertBox.textContent = "Sandi salah. Coba lagi ya 😊";
+        alertBox.className = "alert error";
+        alertBox.style.display = "block";
+        return;
+      }
+
+      // Jika benar → pindah ke Page 2
+      studentNameSpan.textContent = nama;
+
+      alertBox.textContent = "Berhasil! Membuka halaman worksheet...";
+      alertBox.className = "alert success";
+      alertBox.style.display = "block";
+
+      // Tampilkan page 2, sembunyikan page 1
+      page1.style.display = "none";
+      page2.style.display = "block";
+
+      // Atur volume kecil lalu play audio (jika ada source)
+      try {
+        bgAudio.volume = 0.2; // volume kecil
+        bgAudio.play().catch(() => {
+          // Jika browser blokir autoplay, tidak masalah
+        });
+      } catch (e) {
+        // diam saja jika error
+      }
+    }
+
+    btnMasuk.addEventListener("click", masukWorksheet);
+
+    // Tekan Enter di kotak password untuk login
+    passwordInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        masukWorksheet();
+      }
+    });
+
+    // Tombol kembali ke halaman awal
+    backBtn.addEventListener("click", function () {
+      page2.style.display = "none";
+      page1.style.display = "block";
+      passwordInput.value = "";
+      // Hentikan audio jika sedang diputar
+      try {
+        bgAudio.pause();
+        bgAudio.currentTime = 0;
+      } catch (e) {}
+    });
+  </script>
+</body>
+</html>
